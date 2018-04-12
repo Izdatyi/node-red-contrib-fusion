@@ -1,0 +1,22 @@
+{
+  "name": "node-red-contrib-fusion",
+  "version": "1.0.0",
+  "description": "A Node-RED node to fusion incoming messages by category.",
+  "author": "Antoine Pultier",
+  "license": "Apache-2.0",
+  "keywords": [
+    "node-red",
+    "fusion",
+  ],
+  "node-red": {
+    "nodes": {
+      "routing": "10-fusion.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SINTEF-9012/node-red-contrib-fusion.git"
+  },
+  "dependencies": {
+  }
+}

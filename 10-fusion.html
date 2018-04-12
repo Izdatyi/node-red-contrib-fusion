@@ -1,0 +1,29 @@
+<script type="text/javascript">
+
+    RED.nodes.registerType('fusion',{
+        category: 'function',
+        color: '#E9967A',
+        defaults: {
+            name: {value:""},
+            rules: {value: [{v: ""}]},
+            outputs: {value: 1}
+        },
+        inputs:1,
+        outputs:1,
+        icon: 'switch.png',
+        label: function() {
+            return this.name||'fusion';
+        },
+    });
+</script>
+
+<script type="text/x-red" data-template-name="fusion">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="fusion">
+    <p>A Node-RED node to fusion incoming messages by category.</p>
+</script>
