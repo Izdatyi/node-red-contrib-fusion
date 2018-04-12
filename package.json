@@ -6,17 +6,16 @@
   "license": "Apache-2.0",
   "keywords": [
     "node-red",
-    "fusion",
+    "fusion"
   ],
   "node-red": {
     "nodes": {
-      "routing": "10-fusion.js"
+      "fusion": "10-fusion.js"
     }
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/SINTEF-9012/node-red-contrib-fusion.git"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }

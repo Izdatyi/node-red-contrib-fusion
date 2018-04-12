@@ -4,9 +4,9 @@ A Node-RED node to fusion incoming messages by category.
 
 This node will save all incoming messages in memory and publish dictionaries of messages whenever a message is updated.
 
-Dictionaries must be configured by sending a message with the topic `fusion-configuration`. Its payload is a configuration object. The key `output-topic`  configures the topic of the published dictionary *(`fusion` by default)*. The key `input-topics` is a list of topics to fusion *(empty list by default)*. When `allow-undefined` is true, dictionaries containing undefined values will be published as well *(false by default)*.
+Dictionaries must be configured by sending a message with the topic `fusion-configuration`. Its payload is a configuration object. The key `outputTopic`  configures the topic of the published dictionary *(`fusion` by default)*. The key `inputTopics` is a list of topics to fusion *(empty list by default)*. When `allow-undefined` is true, dictionaries containing undefined values will be published as well *(false by default)*.
 
-Dictionaries may be deleted by sending a message with the topic `fusion-configuration` and an empty payload.
+Dictionaries may be deleted by sending a message with the topic `fusion-deletion` and the outputTopic as payload.
 
 All other messages with topics different to `fusion-configuration` will simply be saved for usage in dictionaries. In the current implementation, the messages are saved forever, or until the next NodeRed deployment.
 
@@ -18,8 +18,8 @@ All other messages with topics different to `fusion-configuration` will simply b
 {
   "topic": "fusion-configuration",
   "payload": {
-    "output-topic": "a-and-b-merged",
-    "input-topics": [
+    "outputTopic": "a-and-b-merged",
+    "inputTopics": [
       "topicA",
       "topicB"
     ],
