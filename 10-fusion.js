@@ -24,17 +24,25 @@ module.exports = function(RED) {
         node.log(outputTopic);
         const dictionary = dictionaries.get(outputTopic);
         if (dictionary) {
-          node.log("wut");
           dictionaries.delete(dictionary);
           dirtyDictionaries.delete(dictionary);
           dictionary.topics.forEach((topic) => {
-            node.log("wet");
             dictionariesPerTopic.forEach((dictionaries) => {
-              node.log("wat");
               dictionaries.delete(dictionary);
             });
           });
         }
+    };
+
+    let processTimer = -1;
+
+    const processDirtyDictionariesWithTimer = function() {
+      if (processTimer === -1) {
+        processTimer = setImmediate(() => {
+          processDirtyDictionaries();
+          processTimer = -1;
+        });
+      }
     };
 
     const processDirtyDictionaries = function() {
@@ -102,7 +110,7 @@ module.exports = function(RED) {
         dictionaries.set(outputTopic, dictionary);
        
         // Process the dirty dictionaries at the next tick 
-        processDirtyDictionaries();
+        processDirtyDictionariesWithTimer();
 
       // If it's a deletion
       } else if (topic === 'fusion-deletion') {
@@ -123,7 +131,7 @@ module.exports = function(RED) {
           });
 
           // And process them at the next tick
-          processDirtyDictionaries();
+          processDirtyDictionariesWithTimer();
         }
       }
     });
