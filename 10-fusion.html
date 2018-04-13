@@ -24,4 +24,78 @@
 
 <script type="text/x-red" data-help-name="fusion">
     <p>A Node-RED node to fusion incoming messages by category.</p>
+
+    <p>This node will save all incoming messages in memory and publish dictionaries of messages whenever a message is updated.</p>
+
+    <p>Dictionaries must be configured by sending a message with the topic <code>fusion-configuration</code>. Its payload is a configuration object.
+        <br/>The key <code>outputTopic</code>  configures the topic of the published dictionary <em>(<code>fusion</code> by default)</em>.
+        <br/>The key <code>inputTopics</code> is a list of topics to fusion <em>(empty list by default)</em>.
+        <br/>When <code>allowUndefined</code> is true, dictionaries containing undefined values will be published as well <em>(false by default)</em>.
+        <br/>A <code>additionalData</code> object could be set to include in the fused messages.</p>
+
+    <p>Dictionaries may be deleted by sending a message with the topic <code>fusion-deletion</code> and the outputTopic as payload.</p>
+
+    <p>All other messages with topics different to <code>fusion-configuration</code> or <code>fusion-deletion</code> will simply be saved for usage in dictionaries. In the current implementation, the messages are saved forever, or until the next NodeRed deployment.</p>
+
+    <h3>Example</h3>
+
+    <h4>Configuration</h4>
+
+<pre>
+{
+  "topic": "fusion-configuration",
+  "payload": {
+    "outputTopic": "a-and-b-merged",
+    "inputTopics": [
+      "topicA",
+      "topicB"
+    ],
+    "allowUndefined": false,
+    "additionalData": {
+      "fromage": false
+    }
+  }
+}
+</pre>
+
+    <h4>Input messages</h4>
+
+<pre>
+{
+  "topic": "topicA",
+  "payload": 123
+}
+</pre>
+
+
+<pre>
+{
+  "topic": "topicB",
+  "payload": 456,
+  "otherfield": "abc"
+}
+</pre>
+
+    <h4>Output message</h4>
+
+<pre>
+{
+  "topic": "a-and-b-merged",
+  "payload": {
+    "topicA": {
+      "topic": "topicA",
+      "payload": 123
+    },
+    "topicB": {
+      "topic": "topicB",
+      "payload": 456,
+      "otherfield": "abc"
+    }
+  },
+  "additionalData": {
+    "fromage": false
+  }
+}
+</pre>
+
 </script>

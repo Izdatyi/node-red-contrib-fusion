@@ -4,11 +4,11 @@ A Node-RED node to fusion incoming messages by category.
 
 This node will save all incoming messages in memory and publish dictionaries of messages whenever a message is updated.
 
-Dictionaries must be configured by sending a message with the topic `fusion-configuration`. Its payload is a configuration object. The key `outputTopic`  configures the topic of the published dictionary *(`fusion` by default)*. The key `inputTopics` is a list of topics to fusion *(empty list by default)*. When `allow-undefined` is true, dictionaries containing undefined values will be published as well *(false by default)*.
+Dictionaries must be configured by sending a message with the topic `fusion-configuration`. Its payload is a configuration object. The key `outputTopic`  configures the topic of the published dictionary *(`fusion` by default)*. The key `inputTopics` is a list of topics to fusion *(empty list by default)*. When `allowUndefined` is true, dictionaries containing undefined values will be published as well *(false by default)*. A `additionalData` object could be set to include in the fused messages.
 
 Dictionaries may be deleted by sending a message with the topic `fusion-deletion` and the outputTopic as payload.
 
-All other messages with topics different to `fusion-configuration` will simply be saved for usage in dictionaries. In the current implementation, the messages are saved forever, or until the next NodeRed deployment.
+All other messages with topics different to `fusion-configuration` or `fusion-deletion` will simply be saved for usage in dictionaries. In the current implementation, the messages are saved forever, or until the next NodeRed deployment.
 
 ### Example
 
@@ -23,7 +23,10 @@ All other messages with topics different to `fusion-configuration` will simply b
       "topicA",
       "topicB"
     ],
-    "allow-undefined": false
+    "allowUndefined": false,
+    "additionalData": {
+      "fromage": false
+    }
   }
 }
 ```
@@ -60,6 +63,9 @@ All other messages with topics different to `fusion-configuration` will simply b
       "payload": 456,
       "otherfield": "abc"
     }
+  },
+  "additionalData": {
+    "fromage": false
   }
 }
 ```

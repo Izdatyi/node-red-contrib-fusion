@@ -60,7 +60,8 @@ module.exports = function(RED) {
         if (!containsUndefined || dictionary.allowUndefined) {
           node.send({
             topic: dictionary.outputTopic,
-            payload
+            payload,
+            additionalData: dictionary.additionalData
           });
         }
       });
@@ -81,6 +82,7 @@ module.exports = function(RED) {
         const outputTopic = payload.outputTopic || 'fusion';
         const allowUndefined = !!payload.allowUndefined;
         const topics = new Set();
+        const additionalData = payload.additionalData;
 
 
         // Check if a dictionary with the same output topic already exists and remove it in this case
@@ -92,7 +94,8 @@ module.exports = function(RED) {
         dictionary = {
           outputTopic,
           topics,
-          allowUndefined
+          allowUndefined,
+          additionalData
         };
 
         (payload.inputTopics||[]).forEach((inputTopic) => {
