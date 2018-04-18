@@ -51,9 +51,13 @@ module.exports = function(RED) {
         let containsUndefined = false;
         dictionary.topics.forEach((topic) => {
           const valueInDatabase = database.get(topic);
-          payload[topic] = valueInDatabase;
           if (valueInDatabase === undefined) {
             containsUndefined = true;
+            payload[topic] = valueInDatabase;
+          } else if (dictionary.onlyPayloads) {
+            payload[topic] = valueInDatabase.payload;
+          } else {
+            payload[topic] = valueInDatabase;
           }
         });
 
@@ -81,6 +85,7 @@ module.exports = function(RED) {
 
         const outputTopic = payload.outputTopic || 'fusion';
         const allowUndefined = !!payload.allowUndefined;
+        const onlyPayloads = payload.onlyPayloads;
         const topics = new Set();
         const additionalData = payload.additionalData;
 
@@ -95,6 +100,7 @@ module.exports = function(RED) {
           outputTopic,
           topics,
           allowUndefined,
+          onlyPayloads,
           additionalData
         };
 

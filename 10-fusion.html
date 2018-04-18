@@ -31,6 +31,7 @@
         <br/>The key <code>outputTopic</code>  configures the topic of the published dictionary <em>(<code>fusion</code> by default)</em>.
         <br/>The key <code>inputTopics</code> is a list of topics to fusion <em>(empty list by default)</em>.
         <br/>When <code>allowUndefined</code> is true, dictionaries containing undefined values will be published as well <em>(false by default)</em>.
+        <br/>When <code>onlyPayloads</code> is true <em>(false by default)</em>, only the payloads are merged.
         <br/>A <code>additionalData</code> object could be set to include in the fused messages.</p>
 
     <p>Dictionaries may be deleted by sending a message with the topic <code>fusion-deletion</code> and the outputTopic as payload.</p>
@@ -51,6 +52,7 @@
       "topicB"
     ],
     "allowUndefined": false,
+    "onlyPayloads": false,
     "additionalData": {
       "fromage": false
     }

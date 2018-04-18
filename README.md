@@ -4,7 +4,7 @@ A Node-RED node to fusion incoming messages by category.
 
 This node will save all incoming messages in memory and publish dictionaries of messages whenever a message is updated.
 
-Dictionaries must be configured by sending a message with the topic `fusion-configuration`. Its payload is a configuration object. The key `outputTopic`  configures the topic of the published dictionary *(`fusion` by default)*. The key `inputTopics` is a list of topics to fusion *(empty list by default)*. When `allowUndefined` is true, dictionaries containing undefined values will be published as well *(false by default)*. A `additionalData` object could be set to include in the fused messages.
+Dictionaries must be configured by sending a message with the topic `fusion-configuration`. Its payload is a configuration object. The key `outputTopic`  configures the topic of the published dictionary *(`fusion` by default)*. The key `inputTopics` is a list of topics to fusion *(empty list by default)*. When `allowUndefined` is true, dictionaries containing undefined values will be published as well *(false by default)*. A `additionalData` object could be set to include in the fused messages. When `onlyPayloads` is true *(false by default)*, only the payloads are merged.
 
 Dictionaries may be deleted by sending a message with the topic `fusion-deletion` and the outputTopic as payload.
 
@@ -24,6 +24,7 @@ All other messages with topics different to `fusion-configuration` or `fusion-de
       "topicB"
     ],
     "allowUndefined": false,
+    "onlyPayloads": false,
     "additionalData": {
       "fromage": false
     }
